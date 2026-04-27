@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Math-Xplorer - High Accuracy Edition</title>
     
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -1016,7 +1014,13 @@
     </div>
 
     <script>
+        const MEDIAPIPE_BUNDLE_URL = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.mjs';
+        const MEDIAPIPE_WASM_ROOT = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm';
+        const HAND_LANDMARKER_MODEL_URL = 'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task';
+
         let audioCtx;
+        let handLandmarker;
+        let detectionFrameId = null;
         let currentQIndex = 0;
         let score = 0;
         let isAnswerLocked = false;
@@ -1239,13 +1243,13 @@
         const canvasCtx = canvasElement.getContext('2d', { willReadFrequently: true });
         const holdFeedback = document.getElementById('hold-feedback');
 
-        function onResults(results) {
+        function renderHandTracking(results) {
             canvasCtx.save();
             canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-            canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+            canvasCtx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
 
-            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-                const landmarks = results.multiHandLandmarks[0];
+            if (results.landmarks && results.landmarks.length > 0) {
+                const landmarks = results.landmarks[0];
                 let fingers = 0;
                 if (landmarks[8].y < landmarks[6].y) fingers++;
                 if (landmarks[12].y < landmarks[10].y) fingers++;
@@ -1302,37 +1306,111 @@
             });
         }
 
+        async function createHandLandmarker() {
+            const { FilesetResolver, HandLandmarker } = await import(MEDIAPIPE_BUNDLE_URL);
+            const vision = await FilesetResolver.forVisionTasks(MEDIAPIPE_WASM_ROOT);
+
+            try {
+                return await HandLandmarker.createFromOptions(vision, {
+                    baseOptions: {
+                        modelAssetPath: HAND_LANDMARKER_MODEL_URL,
+                        delegate: 'GPU'
+                    },
+                    runningMode: 'VIDEO',
+                    numHands: 1,
+                    minHandDetectionConfidence: 0.6,
+                    minHandPresenceConfidence: 0.6,
+                    minTrackingConfidence: 0.6
+                });
+            } catch (gpuError) {
+                return await HandLandmarker.createFromOptions(vision, {
+                    baseOptions: {
+                        modelAssetPath: HAND_LANDMARKER_MODEL_URL,
+                        delegate: 'CPU'
+                    },
+                    runningMode: 'VIDEO',
+                    numHands: 1,
+                    minHandDetectionConfidence: 0.6,
+                    minHandPresenceConfidence: 0.6,
+                    minTrackingConfidence: 0.6
+                });
+            }
+        }
+
+        async function startCameraFeed() {
+            if (!navigator.mediaDevices?.getUserMedia) {
+                throw new Error('This browser does not support webcam access.');
+            }
+
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: false,
+                video: {
+                    facingMode: 'user',
+                    width: { ideal: 640 },
+                    height: { ideal: 480 }
+                }
+            });
+
+            videoElement.srcObject = stream;
+
+            await new Promise((resolve) => {
+                videoElement.onloadedmetadata = resolve;
+            });
+
+            await videoElement.play();
+        }
+
+        function startDetectionLoop() {
+            const detectFrame = () => {
+                if (!handLandmarker || videoElement.readyState < 2) {
+                    detectionFrameId = requestAnimationFrame(detectFrame);
+                    return;
+                }
+
+                try {
+                    const results = handLandmarker.detectForVideo(videoElement, performance.now());
+                    renderHandTracking(results);
+                    detectionFrameId = requestAnimationFrame(detectFrame);
+                } catch (err) {
+                    console.error('Hand tracking loop failed:', err);
+                    cancelAnimationFrame(detectionFrameId);
+                    detectionFrameId = null;
+                    document.getElementById('error-message').innerText = '⚠ Hand tracking stopped unexpectedly. Please reload the page.';
+                }
+            };
+
+            if (detectionFrameId) {
+                cancelAnimationFrame(detectionFrameId);
+            }
+
+            detectionFrameId = requestAnimationFrame(detectFrame);
+        }
+
         async function startGame() {
             initAudio();
-            document.getElementById('error-message').innerText = "Initializing neural engine...";
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.innerText = 'Initializing hand-tracking engine...';
 
             try {
                 window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
-                const hands = new Hands({ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}` });
+                handLandmarker = await createHandLandmarker();
+                errorMessage.innerText = 'Starting webcam...';
+                await startCameraFeed();
 
-                hands.setOptions({
-                    maxNumHands: 1,
-                    modelComplexity: 1,
-                    minDetectionConfidence: 0.7,
-                    minTrackingConfidence: 0.7
-                });
-                hands.onResults(onResults);
-
-                const camera = new Camera(videoElement, {
-                    onFrame: async () => await hands.send({ image: videoElement }),
-                    width: 640,
-                    height: 480
-                });
-                await camera.start();
-
-                canvasElement.width = 640;
-                canvasElement.height = 480;
+                canvasElement.width = videoElement.videoWidth || 640;
+                canvasElement.height = videoElement.videoHeight || 480;
 
                 document.getElementById('start-screen').classList.add('hidden');
                 document.getElementById('game-screen').classList.remove('hidden');
+                errorMessage.innerText = '';
                 loadQuestion();
+                startDetectionLoop();
             } catch (err) {
-                document.getElementById('error-message').innerText = "⚠ Camera access denied. Please run on a local server.";
+                console.error('Failed to start game:', err);
+                const friendlyMessage = err && typeof err.message === 'string'
+                    ? err.message
+                    : 'Unknown startup error.';
+                errorMessage.innerText = `⚠ Hand tracking could not start. ${friendlyMessage}`;
             }
         }
     </script>
