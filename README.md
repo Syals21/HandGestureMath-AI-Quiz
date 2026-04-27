@@ -9,7 +9,7 @@
 <p>
   <img src="https://img.shields.io/badge/HTML5-Single%20File%20App-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5 Badge" />
   <img src="https://img.shields.io/badge/JavaScript-Interactive%20Logic-F7DF1E?style=for-the-badge&logo=javascript&logoColor=111111" alt="JavaScript Badge" />
-  <img src="https://img.shields.io/badge/MediaPipe-Hands%20Tracking-0097A7?style=for-the-badge&logo=google&logoColor=white" alt="MediaPipe Badge" />
+  <img src="https://img.shields.io/badge/MediaPipe-Hand%20Landmarker-0097A7?style=for-the-badge&logo=google&logoColor=white" alt="MediaPipe Badge" />
   <img src="https://img.shields.io/badge/Webcam-Gesture%20Input-2563EB?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Webcam Badge" />
 </p>
 
@@ -18,6 +18,7 @@
   <img src="https://img.shields.io/badge/Web%20Audio-Realtime%20Feedback-F59E0B?style=flat-square" alt="Audio Badge" />
   <img src="https://img.shields.io/badge/Confetti-Celebration%20Effects-EC4899?style=flat-square" alt="Confetti Badge" />
   <img src="https://img.shields.io/badge/Questions-29%20Math%20Challenges-8B5CF6?style=flat-square" alt="Questions Badge" />
+  <img src="https://img.shields.io/badge/GitHub%20Pages-Live%20Deployment-171515?style=flat-square&logo=github&logoColor=white" alt="GitHub Pages Badge" />
 </p>
 
 </div>
@@ -61,7 +62,9 @@ Built inside a single-page file, [index.html](/c:/GitHub/HandGestureMath-AI-Quiz
 
 ### 🚀 Technical Strength
 
-- Uses **MediaPipe Hands** for live hand landmark tracking.
+- Uses **MediaPipe Hand Landmarker** from `@mediapipe/tasks-vision` for live hand landmark tracking.
+- Loads the vision bundle and hosted model asset dynamically for browser deployment.
+- Falls back from `GPU` to `CPU` delegate for better device compatibility.
 - Uses **Web Speech API** for spoken question delivery.
 - Uses **Web Audio API** for win and lose tones.
 - Uses **canvas-confetti** for success animations.
@@ -84,7 +87,9 @@ Built inside a single-page file, [index.html](/c:/GitHub/HandGestureMath-AI-Quiz
 ### 🪄 What Happens Behind The Scenes
 
 - The webcam feed is processed in real time.
+- The browser starts the camera using native `getUserMedia`.
 - Hand landmarks are analyzed to estimate how many fingers are raised.
+- Detection runs frame-by-frame through `detectForVideo()` for live recognition.
 - Only gestures from `1` to `4` are accepted as answer inputs.
 - A confirmation threshold of `REQUIRED_FRAMES = 24` helps reduce false triggers.
 - The score increases by `10` for each newly completed correct answer.
@@ -99,6 +104,7 @@ Built inside a single-page file, [index.html](/c:/GitHub/HandGestureMath-AI-Quiz
 - A progress bar fills while the gesture is being held.
 - Correct answers auto-advance after feedback is shown.
 - A protection set prevents duplicate scoring on repeated correct attempts.
+- Startup errors are surfaced on screen so tracking failures are easier to diagnose.
 
 ### 🔊 Feedback System
 
@@ -126,8 +132,9 @@ Built inside a single-page file, [index.html](/c:/GitHub/HandGestureMath-AI-Quiz
 
 ### 🤖 AI and Browser APIs
 
-- **MediaPipe Hands** for gesture detection
-- **camera_utils** for webcam handling
+- **MediaPipe Hand Landmarker** from `@mediapipe/tasks-vision`
+- **FilesetResolver** for loading MediaPipe vision assets
+- **getUserMedia** for webcam access
 - **Web Speech API** for voice playback
 - **Web Audio API** for sound effects
 - **canvas-confetti** for celebration visuals
@@ -139,12 +146,14 @@ Built inside a single-page file, [index.html](/c:/GitHub/HandGestureMath-AI-Quiz
 | Category | Details |
 |---|---|
 | Main file | [index.html](/c:/GitHub/HandGestureMath-AI-Quiz/index.html) |
+| Live site | `https://syals21.github.io/HandGestureMath-AI-Quiz/` |
 | Quiz type | Touchless webcam-based math quiz |
 | Input method | Hand gestures using `1-4` fingers |
 | Total questions | `29` |
 | Scoring | `10 points` per correct answer |
 | Confirmation system | Hold gesture for `24` frames |
 | Voice language | `ms-MY` |
+| Tracking engine | `HandLandmarker` with `GPU -> CPU` fallback |
 
 ---
 
@@ -172,6 +181,18 @@ Run the project from a local server so webcam permissions work more reliably.
 4. Allow camera access when prompted.
 
 If the browser blocks webcam access, avoid opening the file directly with `file:///` and use a local server instead.
+
+---
+
+## Deployment
+
+### 🌐 GitHub Pages
+
+Live version: `https://syals21.github.io/HandGestureMath-AI-Quiz/`
+
+- The project is compatible with GitHub Pages hosting.
+- The hand-tracking system now uses the newer MediaPipe Tasks Vision setup.
+- The model is loaded from a hosted MediaPipe asset, which makes browser deployment more reliable than the older legacy loader.
 
 ---
 
