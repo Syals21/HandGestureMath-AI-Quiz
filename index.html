@@ -1025,9 +1025,9 @@
         let score = 0;
         let isAnswerLocked = false;
         let activeFingers = 0;
-        let holdFrames = 0;
+        let holdStartTime = 0;
         let pendingNextTimer = null;
-        const REQUIRED_FRAMES = 24;
+        const REQUIRED_HOLD_MS = 500;
         
         // Ensure students don't get double points for answering the same question again
         const answeredCorrectly = new Set();
@@ -1259,22 +1259,22 @@
                 if (fingers >= 1 && fingers <= 4 && !isAnswerLocked) {
                     holdFeedback.classList.remove('hidden');
                     if (fingers === activeFingers) {
-                        holdFrames++;
-                        document.querySelector(`#opt-${fingers} .progress-bar`).style.width = `${(holdFrames / REQUIRED_FRAMES) * 100}%`;
-                        if (holdFrames >= REQUIRED_FRAMES) {
+                        const heldForMs = performance.now() - holdStartTime;
+                        document.querySelector(`#opt-${fingers} .progress-bar`).style.width = `${Math.min((heldForMs / REQUIRED_HOLD_MS) * 100, 100)}%`;
+                        if (heldForMs >= REQUIRED_HOLD_MS) {
                             handleAnswer(fingers);
                             resetProgressUI();
                             holdFeedback.classList.add('hidden');
                         }
                     } else {
                         activeFingers = fingers;
-                        holdFrames = 0;
+                        holdStartTime = performance.now();
                         resetProgressUI();
                         document.getElementById(`opt-${fingers}`).classList.add('active');
                     }
                 } else {
                     activeFingers = 0;
-                    holdFrames = 0;
+                    holdStartTime = 0;
                     resetProgressUI();
                     holdFeedback.classList.add('hidden');
                 }
@@ -1290,7 +1290,7 @@
                 canvasCtx.shadowBlur = 0;
             } else {
                 activeFingers = 0;
-                holdFrames = 0;
+                holdStartTime = 0;
                 resetProgressUI();
                 holdFeedback.classList.add('hidden');
             }
