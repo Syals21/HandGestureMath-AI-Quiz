@@ -4,7 +4,7 @@
 
 **HandGestureMath-AI-Quiz** is an interactive browser-based mathematics game that transforms a traditional multiple-choice quiz into a touchless learning experience. Instead of clicking answers, players respond by raising the correct number of fingers in front of a webcam. The project combines math practice, computer vision, visual storytelling, and instant feedback to create a classroom-friendly game that feels futuristic and engaging.
 
-At the center of the experience is [AI_Math_Game/AI_Math.html](/c:/GitHub/HandGestureMath-AI-Quiz/AI_Math_Game/AI_Math.html), a single-page implementation that blends a cinematic interface with real-time hand gesture recognition. The result is a quiz game where students can solve arithmetic questions, confirm their choices with a short hand hold gesture, and receive immediate visual and audio feedback without touching the screen.
+At the center of the experience is [index.html](/c:/GitHub/HandGestureMath-AI-Quiz/index.html), a single-page implementation that blends a cinematic interface with real-time hand gesture recognition. The result is a quiz game where students can solve arithmetic questions, confirm their choices with a short hand hold gesture, and receive immediate visual and audio feedback without touching the screen.
 
 ## Core Idea
 
@@ -47,7 +47,7 @@ This makes the project more than a technical demo. It is also a playful educatio
 
 ## Technical Implementation
 
-The project is implemented as a single self-contained HTML application with embedded CSS and JavaScript. Its architecture is lightweight, direct, and easy to run in a browser environment.
+The project is implemented as a single self-contained HTML application in [index.html](/c:/GitHub/HandGestureMath-AI-Quiz/index.html), with embedded CSS and JavaScript. Its architecture is lightweight, direct, and easy to run in a browser environment.
 
 ### Main technologies used
 
@@ -86,13 +86,12 @@ This styling helps the quiz feel like an "AI mission" rather than a basic school
 ```text
 HandGestureMath-AI-Quiz/
 |- README.md
-`- AI_Math_Game/
-   `- AI_Math.html
+`- index.html
 ```
 
 ## Running The Project
 
-Because the game depends on webcam access, it should be opened in a browser environment that allows camera permissions. For the best experience, run it from a local server instead of opening the HTML file directly.
+Because the game depends on webcam access, it should be opened in a browser environment that allows camera permissions. For the best experience, run the project from a local server and load `index.html` as the main entry page instead of opening the file directly.
 
 ## Why This Project Stands Out
 
