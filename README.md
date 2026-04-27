@@ -1,98 +1,198 @@
 # HandGestureMath-AI-Quiz
 
-## Project Overview
+<div align="center">
 
-**HandGestureMath-AI-Quiz** is an interactive browser-based mathematics game that transforms a traditional multiple-choice quiz into a touchless learning experience. Instead of clicking answers, players respond by raising the correct number of fingers in front of a webcam. The project combines math practice, computer vision, visual storytelling, and instant feedback to create a classroom-friendly game that feels futuristic and engaging.
+## AI Math-Xplorer High Accuracy Edition
 
-At the center of the experience is [index.html](/c:/GitHub/HandGestureMath-AI-Quiz/index.html), a single-page implementation that blends a cinematic interface with real-time hand gesture recognition. The result is a quiz game where students can solve arithmetic questions, confirm their choices with a short hand hold gesture, and receive immediate visual and audio feedback without touching the screen.
+**A futuristic touchless math quiz game powered by hand gestures, webcam tracking, and real-time feedback**
 
-## Core Idea
+<p>
+  <img src="https://img.shields.io/badge/HTML5-Single%20File%20App-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5 Badge" />
+  <img src="https://img.shields.io/badge/JavaScript-Interactive%20Logic-F7DF1E?style=for-the-badge&logo=javascript&logoColor=111111" alt="JavaScript Badge" />
+  <img src="https://img.shields.io/badge/MediaPipe-Hands%20Tracking-0097A7?style=for-the-badge&logo=google&logoColor=white" alt="MediaPipe Badge" />
+  <img src="https://img.shields.io/badge/Webcam-Gesture%20Input-2563EB?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Webcam Badge" />
+</p>
 
-This project is designed to make mathematics feel active, playful, and immersive. Rather than treating quiz practice as a static worksheet, the game invites learners to:
+<p>
+  <img src="https://img.shields.io/badge/Web%20Speech-Bahasa%20Melayu-10B981?style=flat-square" alt="Speech Badge" />
+  <img src="https://img.shields.io/badge/Web%20Audio-Realtime%20Feedback-F59E0B?style=flat-square" alt="Audio Badge" />
+  <img src="https://img.shields.io/badge/Confetti-Celebration%20Effects-EC4899?style=flat-square" alt="Confetti Badge" />
+  <img src="https://img.shields.io/badge/Questions-29%20Math%20Challenges-8B5CF6?style=flat-square" alt="Questions Badge" />
+</p>
 
-- read and hear each question
-- look at four answer choices
-- raise `1`, `2`, `3`, or `4` fingers to match the selected option
-- hold the gesture briefly to confirm the answer
-- continue learning through retry-based feedback and score progression
+</div>
 
-The interaction style encourages focus, movement, and participation, which makes the game suitable for demos, classroom activities, digital exhibitions, or creative AI-learning showcases.
+---
 
-## How The Game Works
+## Overview
 
-The game begins with a polished start screen that introduces the webcam-based interaction. Once the player starts, the app activates the camera, initializes MediaPipe Hands, and opens the main quiz interface.
+**HandGestureMath-AI-Quiz** is an interactive browser-based quiz game that turns math practice into an immersive AI-powered experience. Instead of clicking an answer, players raise `1` to `4` fingers in front of the webcam to choose an option. The game then confirms the answer through a short hold gesture, giving instant visual, audio, and progress feedback.
 
-During gameplay:
+Built inside a single-page file, [index.html](/c:/GitHub/HandGestureMath-AI-Quiz/index.html), the project combines mathematics learning, computer vision, and cinematic UI design into a classroom-friendly game that feels playful, modern, and memorable.
 
-- the left side shows the current math question, progress, score, and four answer cards
-- the right side shows the live webcam feed with tracked hand landmarks
-- the system detects raised fingers from `1` to `4`
-- a hold-to-confirm mechanic prevents accidental selections
-- correct answers award points and automatically move to the next question
-- wrong answers trigger a retry flow so the student can attempt the same question again
+## Why It Feels Different
 
-At the end of the quiz, the player sees a final results screen with their total score and a celebratory finish sequence.
+> This is not just a quiz on a screen.  
+> It is a touchless learning experience where students move, answer, listen, retry, and celebrate.
 
-## Learning Experience
+- `Touchless gameplay` replaces mouse clicks with hand gestures.
+- `Real-time detection` makes the camera part of the learning loop.
+- `Retry-first design` encourages thinking instead of revealing answers too early.
+- `Sci-fi presentation` makes a school activity feel like an AI mission.
+- `Student-friendly feedback` keeps the experience motivating and easy to follow.
 
-The quiz is built with a student-centered interaction model:
+---
 
-- **Touchless answering** makes the experience feel natural and memorable.
-- **Retry instead of reveal** encourages learners to think again rather than simply copy the correct answer.
-- **Voice support in Bahasa Melayu (`ms-MY`)** helps reinforce question delivery for younger learners.
-- **Short celebratory feedback** through sound, color shifts, and confetti keeps motivation high.
-- **Sectioned question flow** introduces a progression from easier arithmetic to more combined operations.
+## Key Highlights
 
-This makes the project more than a technical demo. It is also a playful educational tool that supports repetition, attention, and confidence-building.
+### ✨ Interactive Experience
 
-## Technical Implementation
+- Raise `1`, `2`, `3`, or `4` fingers to choose an answer.
+- Hold the gesture briefly to confirm and avoid accidental selection.
+- Hear the question spoken aloud using Bahasa Melayu voice support.
+- Receive immediate response through glowing UI states, sound, and celebration effects.
 
-The project is implemented as a single self-contained HTML application in [index.html](/c:/GitHub/HandGestureMath-AI-Quiz/index.html), with embedded CSS and JavaScript. Its architecture is lightweight, direct, and easy to run in a browser environment.
+### 🧠 Educational Flow
 
-### Main technologies used
+- Starts with easier arithmetic questions and progresses into combined operations.
+- Encourages repeated attempts through the `Cuba Semula` retry flow.
+- Does not instantly reveal the correct answer after a mistake.
+- Rewards correct answers with score progression and visual encouragement.
 
-- **HTML/CSS/JavaScript** for the complete interface and game logic
-- **MediaPipe Hands** for real-time hand landmark detection
+### 🚀 Technical Strength
+
+- Uses **MediaPipe Hands** for live hand landmark tracking.
+- Uses **Web Speech API** for spoken question delivery.
+- Uses **Web Audio API** for win and lose tones.
+- Uses **canvas-confetti** for success animations.
+- Runs as a lightweight browser project with no large framework required.
+
+---
+
+## Gameplay Flow
+
+### 🎮 How Players Interact
+
+1. Open the game and allow webcam access.
+2. Start the mission from the intro screen.
+3. Read or listen to the current math question.
+4. Match your answer by showing `1` to `4` fingers.
+5. Hold the gesture until the answer is confirmed.
+6. Move to the next question after a correct response.
+7. Retry the same question if the answer is wrong.
+
+### 🪄 What Happens Behind The Scenes
+
+- The webcam feed is processed in real time.
+- Hand landmarks are analyzed to estimate how many fingers are raised.
+- Only gestures from `1` to `4` are accepted as answer inputs.
+- A confirmation threshold of `REQUIRED_FRAMES = 24` helps reduce false triggers.
+- The score increases by `10` for each newly completed correct answer.
+
+---
+
+## Feature Breakdown
+
+### ⚡ Smart Answer System
+
+- Multiple-choice answer cards are mapped directly to finger counts.
+- A progress bar fills while the gesture is being held.
+- Correct answers auto-advance after feedback is shown.
+- A protection set prevents duplicate scoring on repeated correct attempts.
+
+### 🔊 Feedback System
+
+- Spoken question playback supports younger learners and classroom use.
+- Winning and losing tones create immediate emotional feedback.
+- Confetti and theme changes reinforce success moments.
+
+### 🛰️ Visual Style
+
+- Futuristic blue and cyan color palette
+- Glassmorphism panels
+- Animated background atmosphere
+- Neon-style score and progress indicators
+- Mission-themed language and presentation
+
+---
+
+## Tech Stack
+
+### 🧪 Core Technologies
+
+- **HTML5** for structure
+- **CSS3** for styling and animation
+- **JavaScript** for game logic and interaction
+
+### 🤖 AI and Browser APIs
+
+- **MediaPipe Hands** for gesture detection
 - **camera_utils** for webcam handling
-- **Web Speech API** for spoken question playback
-- **Web Audio API** for win/lose sound effects
-- **canvas-confetti** for celebration effects
+- **Web Speech API** for voice playback
+- **Web Audio API** for sound effects
+- **canvas-confetti** for celebration visuals
 
-### Implementation highlights
+---
 
-- A question bank of **29 math questions** is embedded directly in the file.
-- Each question contains a section label, prompt, answer options, and the correct answer index.
-- Finger detection is based on hand landmark comparisons from the tracked webcam feed.
-- Only gestures between **1 and 4 fingers** are accepted as valid answer inputs.
-- A hold-confirm system using `REQUIRED_FRAMES = 24` reduces false selections.
-- Correct answers increase the score by `10` points and trigger automatic progression.
-- A safeguard using an `answeredCorrectly` set prevents duplicate point farming on repeated attempts.
-- Incorrect answers do not reveal the solution immediately, preserving the learning challenge.
+## Project Snapshot
 
-## Interface Style
+| Category | Details |
+|---|---|
+| Main file | [index.html](/c:/GitHub/HandGestureMath-AI-Quiz/index.html) |
+| Quiz type | Touchless webcam-based math quiz |
+| Input method | Hand gestures using `1-4` fingers |
+| Total questions | `29` |
+| Scoring | `10 points` per correct answer |
+| Confirmation system | Hold gesture for `24` frames |
+| Voice language | `ms-MY` |
 
-The game is designed with a strong sci-fi visual identity. The interface uses:
-
-- glowing blue and cyan gradients
-- glassmorphism panels
-- animated background effects
-- futuristic typography
-- live camera overlays and progress indicators
-
-This styling helps the quiz feel like an "AI mission" rather than a basic school exercise, which is a big part of the project's appeal.
+---
 
 ## Project Structure
 
 ```text
 HandGestureMath-AI-Quiz/
-|- README.md
-`- index.html
+|- index.html
+`- README.md
 ```
 
-## Running The Project
+---
 
-Because the game depends on webcam access, it should be opened in a browser environment that allows camera permissions. For the best experience, run the project from a local server and load `index.html` as the main entry page instead of opening the file directly.
+## Run Locally
 
-## Why This Project Stands Out
+### 🛠️ Recommended
 
-**HandGestureMath-AI-Quiz** stands out because it merges education and AI interaction in a form that is immediate, visual, and fun. It shows how computer vision can be used not only for advanced technical systems, but also for creative learning experiences that are accessible to students. The project demonstrates a meaningful combination of gamification, gesture control, and math practice in one compact implementation.
+Run the project from a local server so webcam permissions work more reliably.
+
+### Quick options
+
+1. Open the project folder in your editor.
+2. Start a local server.
+3. Launch `index.html` in the browser.
+4. Allow camera access when prompted.
+
+If the browser blocks webcam access, avoid opening the file directly with `file:///` and use a local server instead.
+
+---
+
+## What Makes This Project Special
+
+**HandGestureMath-AI-Quiz** blends education and AI interaction in a way that feels immediate and exciting. It shows how computer vision can be used beyond technical demos to create meaningful learning experiences for students. The project is simple in structure, but rich in interaction, making it a strong showcase of creativity, usability, and applied AI in education.
+
+---
+
+## Future Ideas
+
+- Add difficulty levels or timed challenge mode
+- Show performance analytics at the end of the quiz
+- Expand the question bank into more math topics
+- Add multilingual voice support
+- Store scores for classroom competitions
+
+---
+
+<div align="center">
+
+### 🌌 Learn Math. Move Naturally. Play Like The Future.
+
+</div>
