@@ -194,7 +194,7 @@ If the browser blocks webcam access, avoid opening the file directly with `file:
 
 ### 🌐 GitHub Pages
 
-Live version: `https://syals21.github.io/HandGestureMath-AI-Quiz/`
+Live version: [https://syals21.github.io/HandGestureMath-AI-Quiz/](https://syals21.github.io/HandGestureMath-AI-Quiz/)
 
 - The project is compatible with GitHub Pages hosting.
 - The hand-tracking system now uses the newer MediaPipe Tasks Vision setup.
