@@ -25,6 +25,12 @@
 
 ---
 
+## Preview
+
+Try the live demo: [https://syals21.github.io/HandGestureMath-AI-Quiz/](https://syals21.github.io/HandGestureMath-AI-Quiz/)
+
+---
+
 ## Overview
 
 **HandGestureMath-AI-Quiz** is an interactive browser-based quiz game that turns math practice into an immersive AI-powered experience. Instead of clicking an answer, players raise `1` to `4` fingers in front of the webcam to choose an option. The game then confirms the answer through a short hold gesture, giving instant visual, audio, and progress feedback.
